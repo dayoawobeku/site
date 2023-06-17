@@ -1,6 +1,6 @@
 import Hero from './components/hero'
 import Post from './components/post';
-import { Site } from '../../libs/info';
+import { Site } from '../../lib/info';
 
 const site = Site;
 

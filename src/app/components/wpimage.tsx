@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Site } from "../../../libs/info";
+import { Site } from "../../../lib/info";
 
 const site = Site;
 

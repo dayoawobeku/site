@@ -6,7 +6,7 @@ export function PrevPost({post}: { post: any }) {
         return;
     }
 
-    const prevURL = `/blog/${post.slug}`;
+    const prevURL = `/blog/${post?.slug}`;
 
     return (
         <div>
@@ -16,7 +16,7 @@ export function PrevPost({post}: { post: any }) {
             <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                 <Link
                     href={prevURL}
-                    dangerouslySetInnerHTML={{__html: post.title}}
+                    dangerouslySetInnerHTML={{__html: post?.title}}
                 ></Link>
             </div>
         </div>
@@ -29,7 +29,7 @@ export function NextPost({post}: { post: any }) {
         return;
     }
 
-    const nextURL = `/blog/${post.slug}`;
+    const nextURL = `/blog/${post?.slug}`;
 
     return (
         <div>
@@ -39,7 +39,7 @@ export function NextPost({post}: { post: any }) {
             <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                 <Link
                     href={nextURL}
-                    dangerouslySetInnerHTML={{__html: post.title}}
+                    dangerouslySetInnerHTML={{__html: post?.title}}
                 ></Link>
             </div>
         </div>

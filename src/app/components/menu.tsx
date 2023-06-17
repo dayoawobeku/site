@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Site } from "../../../libs/info";
+import { Site } from "../../../lib/info";
 
 const site = Site;
 

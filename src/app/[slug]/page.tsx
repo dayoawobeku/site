@@ -1,5 +1,6 @@
-import { Page, PageAbout } from '../pageTemplates';
-import { Site } from '../../../libs/info';
+import { Page, PageAbout, PageReadingList } from '../pageTemplates';
+import { Site } from '../../../lib/info';
+import { redirect } from 'next/navigation';
 
 const site = Site;
 
@@ -9,11 +10,16 @@ async function getPage(slug: string) {
     return data;
 }
 
-async function generateMetadata({ params, searchParams }: { params: any, searchParams: any }) {
+export async function generateMetadata({ params }: { params: any }) {
     const page = await getPage( params.slug );
-    return {
-        title: `${page[0].title.rendered} | David M. Coleman`
-    };
+    if ( page[0] ) {
+        return {
+            title: { __html: page.shift()?.title?.rendered },
+            description: { __html: page.shift()?.description?.rendered }
+        };
+    } else {
+        redirect('/404');
+    }
 }
 
 async function PageWrapper({ params }: {
@@ -23,10 +29,12 @@ async function PageWrapper({ params }: {
 
     return (
         <>
-            {data.map((post: any) => {
-                switch(post.template) {
+            {data.map((page: any) => {
+                switch(page.template) {
                     case 'page-about.php':
                         return (<PageAbout data={data} />);
+                    case 'page-reading-list.php':
+                        return (<PageReadingList data={data} />);
                     default:
                         return (<Page data={data} />);
                 }

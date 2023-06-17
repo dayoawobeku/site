@@ -1,9 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
-import React, { useEffect, useState} from 'react';
-import axios from 'axios';
-import { format } from "date-fns";
-import { Site } from "../../../libs/info";
+import { Site } from "../../../lib/info";
 
 const site = Site;
 

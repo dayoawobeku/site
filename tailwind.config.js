@@ -12,6 +12,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      aspectRatio: {
+        'book': '5 / 8',
+      },
       transitionTimingFunction: {
         'in-skull': 'cubic-bezier(0,1,0.8,2.8)',
       },

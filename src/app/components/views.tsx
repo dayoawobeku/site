@@ -1,4 +1,4 @@
-import { Site } from "../../../libs/info";
+import { Site } from "../../../lib/info";
 const site = Site;
 
 async function Views({id}: {id: number}) {
