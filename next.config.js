@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
+
+const isProd = process.env.NODE_ENV === 'production'
+
 const nextConfig = {
     output: 'export',
     trailingSlash: true,
-    assetPrefix: 'https://vercel.com/wolfheadtv1/site/4eAU3AMgc8wSvskPtqz3ZSqcdNgW',
+    assetPrefix: isProd ? 'https://vercel.com/wolfheadtv1/site/4eAU3AMgc8wSvskPtqz3ZSqcdNgW' : './',
     images: {
         domains: [
             'headless.local',
