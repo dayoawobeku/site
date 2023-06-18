@@ -1,3 +1,4 @@
+import Parser from "html-react-parser";
 import Link from "next/link";
 
 export function PrevPost({post}: { post: any }) {
@@ -16,8 +17,9 @@ export function PrevPost({post}: { post: any }) {
             <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                 <Link
                     href={prevURL}
-                    dangerouslySetInnerHTML={{__html: post?.title}}
-                ></Link>
+                >
+                    {Parser(`${post?.title}`)}
+                </Link>
             </div>
         </div>
     );
@@ -39,8 +41,9 @@ export function NextPost({post}: { post: any }) {
             <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                 <Link
                     href={nextURL}
-                    dangerouslySetInnerHTML={{__html: post?.title}}
-                ></Link>
+                >
+                    {Parser(`${post?.title}`)}
+                </Link>
             </div>
         </div>
     );

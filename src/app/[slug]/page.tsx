@@ -1,3 +1,4 @@
+import Parser from 'html-react-parser';
 import { Page, PageAbout, PageReadingList } from '../pageTemplates';
 import { Site } from '../../../lib/info';
 import { redirect } from 'next/navigation';
@@ -14,8 +15,8 @@ export async function generateMetadata({ params }: { params: any }) {
     const page = await getPage( params.slug );
     if ( page[0] ) {
         return {
-            title: { __html: page.shift()?.title?.rendered },
-            description: { __html: page.shift()?.description?.rendered }
+            title: Parser(page[0]?.title?.rendered),
+            description: Parser(page[0]?.description?.rendered)
         };
     } else {
         redirect('/404');

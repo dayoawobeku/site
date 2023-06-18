@@ -12,18 +12,18 @@ function BlurImage({ src, width, height, alt, allClass, loadClass, doneClass, ..
 
   return (
     <Image
-      {...props}
-      width={width}
-      height={height}
-      alt={alt}
-      src={src}
-      className={cn(
-        allClass,
-        isLoading
-          ? loadClass
-          : doneClass
-      )}
-      onLoadingComplete={() => setLoading(false)}
+        {...props}
+        width={width}
+        height={height}
+        alt={alt}
+        src={src}
+        className={cn(
+          allClass,
+          isLoading
+            ? loadClass
+            : doneClass
+        )}
+        onLoadingComplete={() => setLoading(false)}
     />
   );
 }

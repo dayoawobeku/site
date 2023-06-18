@@ -1,3 +1,4 @@
+import Parser from "html-react-parser"
 import Link from "next/link";
 import { Site } from "../../../lib/info";
 import BookCover from "./bookCover";
@@ -18,19 +19,23 @@ async function ReadingList({feedURL}: {feedURL: string}) {
                             <Link
                                 href={book?.link}
                                 target="_blank"
-                                className="relative mt-12 group flex flex-row gap-6 bg-transparent bg-opacity-20 px-8 py-6 transition duration-100 md:hover:scale-105 rounded-xl hover:bg-gray-100/75 dark:hover:bg-gray-800/75 hover:backdrop-blur-md z-20 hover:z-50"
+                                className="relative mt-12 group flex flex-row gap-6 bg-transparent bg-opacity-20 px-8 py-6 transition-all duration-100 md:hover:-translate-y-5 rounded-xl hover:bg-gray-100/75 dark:hover:bg-gray-800/75 hover:backdrop-blur-md border border-solid border-white/0 outline outline-1 outline-neutral-200/0 hover:border-white hover:outline-neutral-200 dark:outline-neutral-950/0 dark:hover:border-white/5 dark:hover:outline-neutral-950 hover:shadow-2xl z-20 hover:z-50"
                             >
                                 {book?.cover &&
                                    <BookCover book={book} />
                                 }
                                 <div className="flex flex-col grow">
-                                    <h3 className="text-xl line-clamp-2" dangerouslySetInnerHTML={{__html: book?.title}}></h3>
+                                    <h3 className="text-xl line-clamp-2">
+                                        {Parser(`${book?.title}`)}
+                                    </h3>
                                     {book?.subtitle && 
                                         (
                                             <h4 className="text-md text-black/75 dark:text-white/75 line-clamp-1">{book?.subtitle}</h4>
                                         )
                                     }
-                                    <div className="text-black/75 dark:text-white/75 line-clamp-4 md:line-clamp-3 mt-2 mb-3" dangerouslySetInnerHTML={{__html: book?.description}}></div>
+                                    <div className="text-black/75 dark:text-white/75 line-clamp-4 md:line-clamp-3 mt-2 mb-3">
+                                        {Parser(`${book?.description}`)}
+                                    </div>
                                     <div className="flex flex-row mt-auto pb-2">
                                         <span className="flex flex-row leading-5 gap-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="m15.7 3.4.8-.7a3 3 0 0 1 3.3 0l.8.7.7.8a3 3 0 0 1 0 3.4l-.7.8L9.8 19.2a5 5 0 0 1-.7.6l-.8.5-1 .4c-1.3.5-2.2 1-2.8 1-.8.2-1.3 0-1.7-.4-.4-.4-.6-1-.5-1.8.1-.6.5-1.5 1-2.8l.5-1 .4-.7.6-.7L15.7 3.4Zm-2 4.9-7.5 7.4-.3.4-.3.5-.4 1-.9 2v.1c.6-.1 1.3-.5 2.2-.9l1-.4.5-.2.4-.4 7.4-7.4-2.2-2.1Zm3.5.7 2-2 .5-.5a1 1 0 0 0 0-1.2l-.5-.5-.5-.4a1 1 0 0 0-1.1 0c-.2 0-.3.2-.5.4l-2 2L17 9Z"></path></svg>

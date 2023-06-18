@@ -50,7 +50,7 @@ async function BlogPages({ params }: {
                         prevPage === 1 &&
                         <Link
                             href={`/blog/`}
-                            className="py-4 px-6 text-xl transition duration-100 md:hover:scale-105 rounded-xl hover:bg-gray-100/75 dark:hover:bg-gray-800/75 hover:backdrop-blur-md"
+                            className="py-4 px-6 text-xl bg-transparent bg-opacity-20 transition-all duration-100 md:hover:-translate-y-1 rounded-xl hover:bg-gray-100/75 dark:hover:bg-gray-800/75 hover:backdrop-blur-md border border-solid border-white/0 outline outline-1 outline-neutral-200/0 hover:border-white hover:outline-neutral-200 dark:outline-neutral-950/0 dark:hover:border-white/5 dark:hover:outline-neutral-950 hover:shadow-lg z-20"
                         >
                             Newer entries
                         </Link>
@@ -59,7 +59,7 @@ async function BlogPages({ params }: {
                         prevPage > 1 &&
                         <Link
                             href={`/blog/page/${prevPage}`}
-                            className="py-4 px-6 text-xl transition duration-100 md:hover:scale-105 rounded-xl hover:bg-gray-100/75 dark:hover:bg-gray-800/75 hover:backdrop-blur-md"
+                            className="py-4 px-6 text-xl bg-transparent bg-opacity-20 transition-all duration-100 md:hover:-translate-y-1 rounded-xl hover:bg-gray-100/75 dark:hover:bg-gray-800/75 hover:backdrop-blur-md border border-solid border-white/0 outline outline-1 outline-neutral-200/0 hover:border-white hover:outline-neutral-200 dark:outline-neutral-950/0 dark:hover:border-white/5 dark:hover:outline-neutral-950 hover:shadow-lg z-20"
                         >
                             Newer entries
                         </Link>
@@ -68,7 +68,7 @@ async function BlogPages({ params }: {
                         morePages && 
                         <Link
                             href={`/blog/page/${nextPage}`}
-                            className="ml-auto py-4 px-6 text-xl transition duration-100 md:hover:scale-105 rounded-xl hover:bg-gray-100/75 dark:hover:bg-gray-800/75 hover:backdrop-blur-md"
+                            className="ml-auto py-4 px-6 text-xl bg-transparent bg-opacity-20 transition-all duration-100 md:hover:-translate-y-1 rounded-xl hover:bg-gray-100/75 dark:hover:bg-gray-800/75 hover:backdrop-blur-md border border-solid border-white/0 outline outline-1 outline-neutral-200/0 hover:border-white hover:outline-neutral-200 dark:outline-neutral-950/0 dark:hover:border-white/5 dark:hover:outline-neutral-950 hover:shadow-lg z-20"
                         >
                             Older entries
                         </Link>

@@ -1,10 +1,11 @@
 "use client";
 
-import SkullLight from "public/skull_light.png";
-import SkullDark from "public/skull_dark.png";
+import SkullLight from "public/skull_light.webp";
+import SkullDark from "public/skull_dark.webp";
 import { RoughNotation } from 'react-rough-notation';
 import Typewriter from 'typewriter-effect';
 import BlurImage from "./blurimage";
+import Particles from "./particles";
 import { Site } from "../../../lib/info";
 
 const site = Site;
@@ -17,23 +18,26 @@ async function Hero() {
 
     return (
         <>
+            <div className="fixed inset-0 hidden lg:block -z-50">
+                <Particles />
+            </div>
             <div className="mb-12 flex flex-col items-center gap-x-12 xl:flex-row">
-                <div className="xl:w-4/12">
+                <div className="!relative xl:w-4/12 -z-20 xl:z-40">
                     <BlurImage
                         alt="Skull Mascot"
                         src={skullLight}
-                        width={1920}
-                        height={1920}
-                        allClass="transition-reveal duration-[3s] ease-in-skull absolute xl:relative inset-0 my-0 xl:my-0 xl:w-[300px] xl:h-[300px] xl:scale-[3] -translate-y-16 xl:translate-y-16 xl:translate-x-16 -z-50 xl:z-10 dark:hidden"
+                        width={900}
+                        height={900}
+                        allClass="transition-reveal duration-[3s] ease-in-skull absolute xl:relative inset-0 my-0 xl:my-0 xl:w-[300px] xl:h-[300px] xl:scale-[3] -translate-y-16 xl:translate-y-16 xl:translate-x-16 dark:hidden"
                         loadClass="opacity-25 blur"
                         doneClass="opacity-100 blur-none"
                     />
                     <BlurImage
                         alt="Skull Mascot"
                         src={skullDark}
-                        width={1920}
-                        height={1920}
-                        allClass="transition-reveal duration-[3s] ease-in-skull absolute xl:relative inset-0 my-0 xl:my-0 xl:w-[300px] xl:h-[300px] xl:scale-[3] -translate-y-16 xl:translate-y-16 xl:translate-x-16 -z-50 xl:z-10 hidden dark:block"
+                        width={900}
+                        height={900}
+                        allClass="transition-reveal duration-[3s] ease-in-skull absolute xl:relative inset-0 my-0 xl:my-0 xl:w-[300px] xl:h-[300px] xl:scale-[3] -translate-y-16 xl:translate-y-16 xl:translate-x-16 hidden dark:block"
                         loadClass="opacity-25 blur"
                         doneClass="opacity-100 blur-none"
                     />

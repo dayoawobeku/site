@@ -1,4 +1,5 @@
 import React from "react";
+import Parser from 'html-react-parser';
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
@@ -20,9 +21,9 @@ async function getPost(slug: string) {
 
 export async function generateMetadata({ params }: { params: any }) {
     const post = await getPost(params?.slug);
-    const postTitle = { __html: post.shift()?.title?.rendered };
-    const postDescription = { __html: post.shift()?.description?.rendered };
-    const postImage = post.shift()?.featured_images?.medium_large;
+    const postTitle = Parser(`${post[0]?.title?.rendered}`);
+    const postDescription = Parser(`${post[0]?.description?.rendered}`);
+    const postImage = post[0]?.featured_images?.medium_large;
     return {
         title: postTitle,
         description: postDescription,
@@ -41,8 +42,8 @@ async function BlogHead({ params }: {
 
 
     const posts = await getPost(params.slug);
-    const postDate = format( new Date( posts.shift()?.date_gmt ), 'EEEE, MMMM do, yyyy' );
-    if ( posts.shift()?.sticky ) {
+    const postDate = format( new Date( posts[0]?.date_gmt ), 'EEEE, MMMM do, yyyy' );
+    if ( posts[0]?.sticky ) {
         return (
             <RoughNotation
                 animate={true}
@@ -66,7 +67,9 @@ async function BlogHead({ params }: {
                         </div>
                     </dl>
                     <div>
-                        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14" dangerouslySetInnerHTML={{__html: posts.shift()?.title?.rendered}}></h1>
+                        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
+                            {Parser(`${posts[0]?.title?.rendered}`)}
+                        </h1>
                     </div>
                     <div className="flex justify-center gap-5 py-4">
                         <span className="flex items-center gap-1.5">
@@ -75,15 +78,15 @@ async function BlogHead({ params }: {
                         </span>
                         <span className="flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="m15.7 3.4.8-.7a3 3 0 0 1 3.3 0l.8.7.7.8a3 3 0 0 1 0 3.4l-.7.8L9.8 19.2a5 5 0 0 1-.7.6l-.8.5-1 .4c-1.3.5-2.2 1-2.8 1-.8.2-1.3 0-1.7-.4-.4-.4-.6-1-.5-1.8.1-.6.5-1.5 1-2.8l.5-1 .4-.7.6-.7L15.7 3.4Zm-2 4.9-7.5 7.4-.3.4-.3.5-.4 1-.9 2v.1c.6-.1 1.3-.5 2.2-.9l1-.4.5-.2.4-.4 7.4-7.4-2.2-2.1Zm3.5.7 2-2 .5-.5a1 1 0 0 0 0-1.2l-.5-.5-.5-.4a1 1 0 0 0-1.1 0c-.2 0-.3.2-.5.4l-2 2L17 9Z"/></svg>
-                            {posts.shift()?.read_time?.words.toLocaleString()} words
+                            {posts[0]?.read_time?.words.toLocaleString()} words
                         </span>
                         <span className="flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="M11 6a5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5Zm-1 0a4 4 0 0 0-4-4 4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4ZM5.5 4a.5.5 0 0 1 1 0v1.8L7.9 7A.5.5 0 0 1 7 8L5.6 6.4 5.5 6V4Z"/></svg>
-                            {posts.shift()?.read_time?.time?.minutes.toLocaleString()} min read
+                            {posts[0]?.read_time?.time?.minutes.toLocaleString()} min read
                         </span>
                         <span className="flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="M.8 5.8a5.5 5.5 0 0 1 10.4 0v.4a5.5 5.5 0 0 1-10.4 0v-.4Zm1 .2a4.5 4.5 0 0 0 8.4 0 4.5 4.5 0 0 0-8.4 0ZM8 6a2 2 0 0 1-2 2 2 2 0 0 1-2-2c0-1.1.9-2 2-2a2 2 0 0 1 2 2ZM7 6c0-.5-.5-1-1-1a1 1 0 0 0-1 1c0 .5.5 1 1 1s1-.5 1-1Z"/></svg>
-                            <Views id={posts.shift()?.id} />
+                            <Views id={posts[0]?.id} />
                         </span>
                     </div>
                 </div>
@@ -104,20 +107,22 @@ async function BlogHead({ params }: {
                     </div>
                 </dl>
                 <div>
-                    <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14" dangerouslySetInnerHTML={{__html: posts.shift()?.title.rendered}}></h1>
+                    <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
+                        {Parser(`${posts[0]?.title?.rendered}`)}
+                    </h1>
                 </div>
                 <div className="flex justify-center gap-5 py-4">
                     <span className="flex items-center gap-1.5">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="m15.7 3.4.8-.7a3 3 0 0 1 3.3 0l.8.7.7.8a3 3 0 0 1 0 3.4l-.7.8L9.8 19.2a5 5 0 0 1-.7.6l-.8.5-1 .4c-1.3.5-2.2 1-2.8 1-.8.2-1.3 0-1.7-.4-.4-.4-.6-1-.5-1.8.1-.6.5-1.5 1-2.8l.5-1 .4-.7.6-.7L15.7 3.4Zm-2 4.9-7.5 7.4-.3.4-.3.5-.4 1-.9 2v.1c.6-.1 1.3-.5 2.2-.9l1-.4.5-.2.4-.4 7.4-7.4-2.2-2.1Zm3.5.7 2-2 .5-.5a1 1 0 0 0 0-1.2l-.5-.5-.5-.4a1 1 0 0 0-1.1 0c-.2 0-.3.2-.5.4l-2 2L17 9Z"/></svg>
-                        {posts.shift()?.read_time?.words.toLocaleString()} words
+                        {posts[0]?.read_time?.words.toLocaleString()} words
                     </span>
                     <span className="flex items-center gap-1.5">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="M11 6a5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5Zm-1 0a4 4 0 0 0-4-4 4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4ZM5.5 4a.5.5 0 0 1 1 0v1.8L7.9 7A.5.5 0 0 1 7 8L5.6 6.4 5.5 6V4Z"/></svg>
-                        {posts.shift()?.read_time?.time?.minutes.toLocaleString()} min read
+                        {posts[0]?.read_time?.time?.minutes.toLocaleString()} min read
                     </span>
                     <span className="flex items-center gap-1.5">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="M.8 5.8a5.5 5.5 0 0 1 10.4 0v.4a5.5 5.5 0 0 1-10.4 0v-.4Zm1 .2a4.5 4.5 0 0 0 8.4 0 4.5 4.5 0 0 0-8.4 0ZM8 6a2 2 0 0 1-2 2 2 2 0 0 1-2-2c0-1.1.9-2 2-2a2 2 0 0 1 2 2ZM7 6c0-.5-.5-1-1-1a1 1 0 0 0-1 1c0 .5.5 1 1 1s1-.5 1-1Z"/></svg>
-                        <Views id={posts.shift()?.id} />
+                        <Views id={posts[0]?.id} />
                     </span>
                 </div>
             </div>

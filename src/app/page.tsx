@@ -21,7 +21,9 @@ async function Home() {
         Latest
       </h2>
       <hr className='relative border-gray-200 dark:border-gray-700 z-20' />
-      {posts}
+      <div className='relative z-50'>
+        {posts}
+      </div>
     </>
   )
 }

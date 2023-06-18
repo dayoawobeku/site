@@ -3,9 +3,10 @@
 const isProd = process.env.NODE_ENV === 'production'
 
 const nextConfig = {
-    output: 'export',
+    // output: 'export',
+    distDir: 'build',
     trailingSlash: true,
-    assetPrefix: isProd ? 'https://vercel.com/wolfheadtv1/site/4eAU3AMgc8wSvskPtqz3ZSqcdNgW' : './',
+    // assetPrefix: isProd ? 'https://davidmc.co' : './',
     images: {
         domains: [
             'headless.local',
@@ -16,6 +17,10 @@ const nextConfig = {
             's.gr-assets.com',
             'books.google.com'
         ],
+    },
+    transpilePackages: ['@react-three/drei'],
+    experimental: {
+        scrollRestoration: true,
     },
 }
 

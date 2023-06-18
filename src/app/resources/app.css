@@ -36,6 +36,24 @@
     @apply !decoration-amber-500
 }
 
+.menu-item::before {
+    content: '';
+    position: absolute;
+    @apply inset-x-1 -bottom-px;
+    height: 1px;
+    margin: 0 auto;
+    border-radius: 999px 999px 0 0;
+    background: linear-gradient(to right, transparent 0%, #21c64d 25%, #85f0a1 50%, #21c64d 75%, transparent 100%);
+    mix-blend-mode: color-burn;
+
+    opacity: 0;
+
+    @apply transition-all duration-100;
+}
+
+.menu-item:hover::before {
+    opacity: 1;
+}
 
 .alert {
     position: relative;
@@ -51,15 +69,4 @@
 
 .Typewriter {
     display: inline;
-}
-
-@media screen and (max-width: 767px) {
-    body[data-menu="hide"] #mobileMenu,
-    body[data-menu="show"] #homeLink {
-        display: none;
-    }
-    body[data-menu="show"] #mobileMenu,
-    body[data-menu="hide"] #homeLink {
-        display: initial;
-    }
 }
