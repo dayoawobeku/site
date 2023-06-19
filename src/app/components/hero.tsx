@@ -42,7 +42,7 @@ async function Hero() {
                         doneClass="opacity-100 blur-none"
                     />
                 </div>
-                <div className="relative pt-6 -order-1 z-20">
+                <div className="relative pt-6 -order-1 z-50">
                     <h1 className="headline pb-6 text-4xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
                         Howdy, I&apos;m <span className="text-primary-400">David</span>
                     </h1>
