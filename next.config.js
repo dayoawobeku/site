@@ -4,7 +4,6 @@ const isProd = process.env.NODE_ENV === 'production'
 
 const nextConfig = {
     // output: 'export',
-    distDir: 'build',
     trailingSlash: true,
     // assetPrefix: isProd ? 'https://davidmc.co' : './',
     images: {
