@@ -1,6 +1,5 @@
 import parse from 'html-react-parser';
 import WpImage from './wpimage';
-import RoughSeparator from './separator';
 
 function Blocks({data}: any) {
     return (
@@ -33,13 +32,15 @@ function Blocks({data}: any) {
                         return (
                             <>
                                 <figure className={blockClass} key={block.attrs.uuid}>
-                                    <WpImage
-                                        id={block.attrs.id}
-                                        alt={block.title}
-                                        width={block.attrs.width ? block.attrs.width : 762}
-                                        height={block.attrs.height ? block.attrs.height : 0}
-                                        className={`aspect-[${block.attrs.width}/${block.attrs.height}] rounded-lg`}
-                                    />
+                                    <div style={{aspectRatio: `${block.attrs.width}/${block.attrs.height}`}} className='my-4'>
+                                        <WpImage
+                                            id={block.attrs.id}
+                                            alt={block.title}
+                                            width={block.attrs.width ? block.attrs.width : 762}
+                                            height={block.attrs.height ? block.attrs.height : 0}
+                                            className="rounded-lg m-0"
+                                        />
+                                    </div>
                                     {blockCaption}
                                 </figure>
                             </>
@@ -59,7 +60,7 @@ function Blocks({data}: any) {
                         )
                     } else if ( block.blockName === 'core/separator' ) {
                         return (
-                            <RoughSeparator className="w-1/4 h-px my-16 mx-auto border-none" key={block.uuid} />
+                            <hr className="w-1/4 h-[2px] my-16 mx-auto border-none bg-black/25 dark:bg-white/25" key={block.uuid} />
                         )
                     } else {
                         return parse(block.innerHTML)
