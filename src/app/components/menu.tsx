@@ -32,7 +32,7 @@ const Menu: React.FC<MenuProps> = ({ mobile, toggle }) => {
     return (
         <>
             {menuData.map((item: any) => (
-            <Link key={item.url} href={item.url} className="menu-item">
+            <Link key={item.url} href={item.url} className="menu-item" onClick={toggle}>
                 <span className="text-zinc-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/5 block px-4 py-2 text-sm">
                     {item.title}
                 </span>
