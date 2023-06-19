@@ -5,19 +5,10 @@ import Image from "next/image";
 import { format } from "date-fns";
 import PostTag from "../../components/tag";
 import { PrevPost, NextPost } from "../../components/adjacentPosts";
-import { Site } from "../../../../lib/info";
 import Views from "@/app/components/views";
 import { RoughNotation } from "react-rough-notation";
 import Blocks from "@/app/components/blocks";
-import BlogPages from "../page/[id]/page";
-
-const site = Site;
-
-async function getPost(slug: string) {
-    const res = await fetch(`${site}/wp-json/wp/v2/posts?slug=${slug}&per_page=1&_embed`, { next: { revalidate: 10 } })
-    const data = await res.json();
-    return data;
-}
+import { getPost } from "../../api";
 
 export async function generateMetadata({ params }: { params: any }) {
     const post = await getPost(params?.slug);
@@ -35,15 +26,13 @@ export async function generateMetadata({ params }: { params: any }) {
     };
 }
 
-
 async function BlogHead({ params }: {
         params: { slug: string }
     }) {
 
-
     const posts = await getPost(params.slug);
-    const postDate = format( new Date( posts[0]?.date_gmt ), 'EEEE, MMMM do, yyyy' );
-    if ( posts[0]?.sticky ) {
+    const postDate = format(new Date(posts[0]?.date_gmt), 'EEEE, MMMM do, yyyy');
+    if (posts[0]?.sticky) {
         return (
             <RoughNotation
                 animate={true}

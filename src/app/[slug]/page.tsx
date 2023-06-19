@@ -1,47 +1,39 @@
 import Parser from 'html-react-parser';
 import { Page, PageAbout, PageReadingList } from '../pageTemplates';
-import { Site } from '../../../lib/info';
+import { getPage } from '../api';
 import { redirect } from 'next/navigation';
 
-const site = Site;
+async function PageWrapper({ params }: {
+  params: { slug: string }
+}) {
+  const data = await getPage(params.slug);
 
-async function getPage(slug: string) {
-    const res = await fetch(`${site}/wp-json/wp/v2/pages?slug=${slug}&per_page=1&_embed`, { next: { revalidate: 10 } })
-    const data = await res.json();
-    return data;
+  if (data[0]) {
+    switch (data[0].template) {
+      case 'page-about.php':
+        return (<PageAbout data={data} />);
+      case 'page-reading-list.php':
+        return (<PageReadingList data={data} />);
+      default:
+        return (<Page data={data} />);
+    }
+  } else {
+    redirect('/404');
+    return null;
+  }
 }
 
 export async function generateMetadata({ params }: { params: any }) {
-    const page = await getPage( params.slug );
-    if ( page[0] ) {
-        return {
-            title: Parser(page[0]?.title?.rendered),
-            description: Parser(page[0]?.description?.rendered)
-        };
-    } else {
-        redirect('/404');
-    }
+  const page = await getPage(params.slug);
+  if (page[0]) {
+    return {
+      title: Parser(page[0]?.title?.rendered),
+      description: Parser(page[0]?.description?.rendered)
+    };
+  } else {
+    redirect('/404');
+    return null;
+  }
 }
 
-async function PageWrapper({ params }: {
-        params: { slug: string }
-    }) {
-    const data = await getPage(params.slug);
-
-    return (
-        <>
-            {data.map((page: any) => {
-                switch(page.template) {
-                    case 'page-about.php':
-                        return (<PageAbout data={data} />);
-                    case 'page-reading-list.php':
-                        return (<PageReadingList data={data} />);
-                    default:
-                        return (<Page data={data} />);
-                }
-            })}
-        </>
-    );
-}
-
-export default PageWrapper
+export default PageWrapper;

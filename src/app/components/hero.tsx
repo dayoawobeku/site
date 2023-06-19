@@ -5,7 +5,6 @@ import SkullDark from "public/skull_dark.webp";
 import { RoughNotation } from 'react-rough-notation';
 import Typewriter from 'typewriter-effect';
 import BlurImage from "./blurimage";
-import Particles from "./particles";
 import { Site } from "../../../lib/info";
 
 const site = Site;
@@ -18,9 +17,6 @@ async function Hero() {
 
     return (
         <>
-            <div className="fixed inset-0 hidden lg:block -z-50">
-                <Particles />
-            </div>
             <div className="mb-12 flex flex-col items-center gap-x-12 xl:flex-row">
                 <div className="!relative xl:w-4/12 -z-20 xl:z-40">
                     <BlurImage

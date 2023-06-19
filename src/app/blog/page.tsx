@@ -9,12 +9,10 @@ export async function generateMetadata() {
     };
 }
 
-const site = Site;
-
 async function Blog() {
   // Track state for posts, current page and number of pages
 
-  const res = await fetch(`${site}/wp-json/wp/v2/posts?per_page=10`, { next: { revalidate: 10 } })
+  const res = await fetch(`${Site}/wp-json/wp/v2/posts?per_page=10`, { next: { revalidate: 10 } })
   const posts = await res.json();
   const totalPages = await res.headers.get('X-WP-TotalPages');
 
@@ -25,7 +23,7 @@ async function Blog() {
               <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
                   Blog
               </h1>
-              <SearchForm />
+              {/* <SearchForm /> */}
               <hr className="!mt-8 border-gray-800"/>
           </div>
       </div>

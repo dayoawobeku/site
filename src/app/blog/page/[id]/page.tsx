@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Post from "../../../components/post";
 import { Site } from "../../../../../lib/info";
-// import SearchForm from "@/app/components/searchForm";
+import SearchForm from "@/app/components/searchForm";
 
 export async function generateMetadata() {
     return {

@@ -3,8 +3,6 @@ import Link from "next/link";
 import { Site } from "../../../../../../lib/info";
 import Error404 from "@/app/not-found";
 
-const site = Site;
-
 export async function generateMetadata({ params }: { params: any }) {
   return {
       title: decodeURI(params.slug)
@@ -16,7 +14,7 @@ async function SearchPages({ params }: {
   }) {
   // Track state for posts, current page and number of pages
 
-  const res = await fetch(`${site}/wp-json/wp/v2/search/?subtype=post&per_page=10&page=${params.id}&search=${params.slug}`, { next: { revalidate: 10 } })
+  const res = await fetch(`${Site}/wp-json/wp/v2/search/?subtype=post&per_page=10&page=${params.id}&search=${params.slug}`, { next: { revalidate: 10 } })
   const posts = await res.json();
   const totalPages = await res.headers.get('X-WP-TotalPages');
   const morePages = ( Number(totalPages) > Number(params.id) );

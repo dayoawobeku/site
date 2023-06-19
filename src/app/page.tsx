@@ -1,12 +1,9 @@
-import Hero from './components/hero'
+import Hero from './components/hero';
 import Post from './components/post';
-import { Site } from '../../lib/info';
-
-const site = Site;
+import { fetchPostsHome } from './api';
 
 async function Home() {
-  const res = await fetch(`${site}/wp-json/wp/v2/posts?per_page=3`, { next: { revalidate: 10 } })
-  const data = await res.json();
+  const data = await fetchPostsHome();
 
   const posts = data.map((post: any) => {
     return (
@@ -25,7 +22,7 @@ async function Home() {
         {posts}
       </div>
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

@@ -36,7 +36,7 @@
     @apply !decoration-amber-500
 }
 
-.menu-item::before {
+.lg-menu-item::before {
     content: '';
     position: absolute;
     @apply inset-x-1 -bottom-px;
@@ -51,7 +51,7 @@
     @apply transition-all duration-100;
 }
 
-.menu-item:hover::before {
+.lg-menu-item:hover::before {
     opacity: 1;
 }
 

@@ -9,6 +9,7 @@ const nextConfig = {
     // assetPrefix: isProd ? 'https://davidmc.co' : './',
     images: {
         domains: [
+            'localhost',
             'headless.local',
             '0.gravatar.com',
             '1.gravatar.com',
