@@ -38,7 +38,7 @@ function Blocks({data}: any) {
                                         alt={block.title}
                                         width={block.attrs.width ? block.attrs.width : 762}
                                         height={block.attrs.height ? block.attrs.height : 0}
-                                        className="rounded-lg"
+                                        className={`aspect-[${block.attrs.width}/${block.attrs.height}] rounded-lg`}
                                     />
                                     {blockCaption}
                                 </figure>
