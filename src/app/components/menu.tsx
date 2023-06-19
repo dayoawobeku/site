@@ -2,24 +2,37 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchMenuData } from "../api";
 
-const Menu: React.FC = ({mobile, toggle}: {mobile: boolean, toggle: any}) => {
-  const [menuData, setMenuData] = useState([]);
+interface MenuItem {
+  url: string;
+  title: string;
+}
+
+interface MenuProps {
+  mobile: boolean;
+  toggle: () => void;
+}
+
+const Menu: React.FC<MenuProps> = ({ mobile, toggle }) => {
+  const [menuData, setMenuData] = useState<MenuItem[]>([]);
 
   useEffect(() => {
-    fetchMenuData()
-      .then((data: any) => {
+    const fetchMenu = async () => {
+      try {
+        const data = await fetchMenuData();
         setMenuData(data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching menu data:", error);
-      });
+      }
+    };
+
+    fetchMenu();
   }, []);
 
   if ( mobile ) {
     return (
         <>
             {menuData.map((item: any) => (
-            <Link key={item.url} href={item.url} className="menu-item" onClick={toggle}>
+            <Link key={item.url} href={item.url} className="menu-item">
                 <span className="text-zinc-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/5 block px-4 py-2 text-sm">
                     {item.title}
                 </span>

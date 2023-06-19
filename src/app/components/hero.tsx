@@ -10,8 +10,6 @@ import { Site } from "../../../lib/info";
 const site = Site;
 
 async function Hero() {
-    const res = await fetch(`${site}/wp-json/options/all`, { next: { revalidate: 10 } })
-    const data = await res.json();
     const skullLight = SkullLight;
     const skullDark = SkullDark;
 

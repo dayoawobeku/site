@@ -11,6 +11,7 @@ const nextConfig = {
         domains: [
             'localhost',
             'headless.local',
+            'secure.davidmc.io',
             '0.gravatar.com',
             '1.gravatar.com',
             '2.gravatar.com',

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import WpImage from "./wpimage";
 import { fetchLogoData } from "../api";
-import { data } from "autoprefixer";
+
+interface LogoData {
+  site_logo: string;
+  name: string;
+}
 
 const Logo: React.FC = () => {
-  const [logoData, setLogoData] = useState(null);
+  const [logoData, setLogoData] = useState<LogoData | null>(null);
 
   useEffect(() => {
     fetchLogoData()
-      .then((data: any) => {
+      .then((data: LogoData) => {
         setLogoData(data);
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         console.error("Error fetching logo data:", error);
       });
   }, []);
@@ -20,16 +24,18 @@ const Logo: React.FC = () => {
     return null;
   }
 
+  const logoId: number = parseInt(logoData.site_logo, 10); // Parse the string as a number
+
   return (
     <>
       <WpImage
-        id={logoData.site_logo}
+        id={logoId}
         width={32}
         height={32}
         alt={logoData.name}
         className="rounded-full outline outline-2 outline-black/25 dark:outline-white/25 mr-2"
       />
-      <span>David M. Coleman</span>
+      <span>{logoData.name}</span>
     </>
   );
 };
