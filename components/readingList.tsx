@@ -1,6 +1,6 @@
 import Parser from "html-react-parser"
 import Link from "next/link";
-import { Site } from "../../../lib/info";
+import { Site } from "../lib/info";
 import BookCover from "./bookCover";
 
 

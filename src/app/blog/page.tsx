@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Post from "../components/post";
-import { fetchPosts } from "@/app/api";
+import Post from "../../../components/post";
+import { fetchPosts } from "../../../../libs/api";
 // import SearchForm from "../components/searchForm";
 
 export async function generateMetadata() {

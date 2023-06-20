@@ -3,11 +3,11 @@ import Parser from 'html-react-parser';
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
-import PostTag from "../../components/tag";
-import { PrevPost, NextPost } from "../../components/adjacentPosts";
-import Views from "@/app/components/views";
+import PostTag from "../../../../components/tag";
+import { PrevPost, NextPost } from "../../../../components/adjacentPosts";
+import Views from "../../../../components/views";
 import { RoughNotation } from "react-rough-notation";
-import Blocks from "@/app/components/blocks";
+import Blocks from "../../../../components/blocks";
 import { fetchPost } from "@/app/api";
 
 export async function generateMetadata({ params }: { params: any }) {

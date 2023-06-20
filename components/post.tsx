@@ -1,7 +1,7 @@
 import Parser from "html-react-parser";
 import Link from "next/link";
 import { format } from "date-fns";
-import { Site } from "../../../lib/info";
+import { Site } from "../lib/info";
 import PostTag from "./tag";
 
 const site = Site;

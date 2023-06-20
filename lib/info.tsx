@@ -1,2 +1,2 @@
-export const Site = "https://secure.davidmc.io";
+export const Site = "http://headless.local";
 export const menuID = 3;

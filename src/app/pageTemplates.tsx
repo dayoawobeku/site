@@ -1,8 +1,8 @@
 import Parser from "html-react-parser"
 import { RoughNotation } from "react-rough-notation"
-import WpImage from "./components/wpimage"
-import ReadingList from "./components/readingList"
-import Blocks from "./components/blocks"
+import WpImage from "../../components/wpimage"
+import ReadingList from "../../components/readingList"
+import Blocks from "../../components/blocks"
 
 export function Page({data}: {data: any}) {
     return (

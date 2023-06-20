@@ -1,7 +1,7 @@
 import Link from "next/link";
-import PostTag from "@/app/components/tag";
+import PostTag from "../../../../../../../components/tag";
 import { fetchPosts, fetchTags } from "@/app/api";
-import Post from "@/app/components/post";
+import Post from "../../../../../../../components/post";
 
 export async function generateMetadata({ params }: { params: any }) {
   const { data: tags } = await fetchTags(params?.slug);

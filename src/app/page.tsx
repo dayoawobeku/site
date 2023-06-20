@@ -1,10 +1,7 @@
-import Hero from './components/hero';
-import Post from './components/post';
-import { fetchPosts } from './api';
+import Hero from '../../components/hero';
+import PostLoop from '../../components/postLoop';
 
-async function Home() {
-  const data = await fetchPosts(3, 1);
-
+function Home() {
   return (
     <>
       <Hero />
@@ -13,13 +10,7 @@ async function Home() {
       </h2>
       <hr className='relative border-gray-200 dark:border-gray-700 z-20' />
       <div className='relative z-50'>
-        {
-          data.data.map((post: any) => {
-            return (
-              <Post id={post.id} key={post.id} />
-            );
-          })
-        }
+        <PostLoop limit={3} perPage={1} tag="" />
       </div>
     </>
   );

@@ -1,4 +1,5 @@
-import { Site, menuID } from "../../lib/info";
+
+import { Site, menuID } from "./info";
 
 interface QueryParams {
   [key: string]: string | number | boolean;
@@ -20,24 +21,24 @@ async function fetchData(url: string, params?: QueryParams) {
   return { data, totalPages };
 }
 
-export async function fetchLogo() {
+export function fetchLogo() {
   const url = `${Site}/wp-json/`;
   return fetchData(url);
 }
 
-export async function fetchImage(imageId: number) {
+export function fetchImage(imageId: number) {
   const params: QueryParams = {};
 
   const url = `${Site}/wp-json/wp/v2/media/${imageId}`;
   return fetchData(url, params);
 }
 
-export async function fetchMenu() {
+export function fetchMenu() {
   const url = `${Site}/wp-json/options/menu/${menuID}`;
   return fetchData(url);
 }
 
-export async function fetchPosts(limit: number, page: number, tag?: string) {
+export function fetchPosts(limit: number, page: number, tag?: string) {
   const params: QueryParams = {
     per_page: limit.toString(),
     page: page.toString(),
@@ -48,7 +49,7 @@ export async function fetchPosts(limit: number, page: number, tag?: string) {
   return fetchData(url, params);
 }
 
-export async function fetchPost(slug: string) {
+export function fetchPost(slug: string) {
   const params: QueryParams = {
     slug,
     per_page: "1",
@@ -59,7 +60,7 @@ export async function fetchPost(slug: string) {
   return fetchData(url, params);
 }
 
-export async function fetchPage(slug: string) {
+export function fetchPage(slug: string) {
   const params: QueryParams = {
     slug,
     per_page: "1",
@@ -70,7 +71,7 @@ export async function fetchPage(slug: string) {
   return fetchData(url, params);
 }
 
-export async function fetchTags(searchTerm: string) {
+export function fetchTags(searchTerm: string) {
   const params: QueryParams = {
     search: searchTerm,
   };

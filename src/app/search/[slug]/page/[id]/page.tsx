@@ -1,4 +1,4 @@
-import Post from "../../../../components/post";
+import Post from "../../../../../../components/post";
 import Link from "next/link";
 import { Site } from "../../../../../../lib/info";
 import Error404 from "@/app/not-found";

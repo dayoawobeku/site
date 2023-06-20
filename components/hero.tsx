@@ -5,11 +5,8 @@ import SkullDark from "public/skull_dark.webp";
 import { RoughNotation } from 'react-rough-notation';
 import Typewriter from 'typewriter-effect';
 import BlurImage from "./blurimage";
-import { Site } from "../../../lib/info";
 
-const site = Site;
-
-async function Hero() {
+function Hero() {
     const skullLight = SkullLight;
     const skullDark = SkullDark;
 

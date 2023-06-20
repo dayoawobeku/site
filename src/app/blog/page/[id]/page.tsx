@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Post from "../../../components/post";
+import Post from "../../../../../components/post";
 import { fetchPosts } from "@/app/api";
 // import SearchForm from "@/app/components/searchForm";
 
