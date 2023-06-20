@@ -8,10 +8,10 @@ import { PrevPost, NextPost } from "../../components/adjacentPosts";
 import Views from "@/app/components/views";
 import { RoughNotation } from "react-rough-notation";
 import Blocks from "@/app/components/blocks";
-import { getPost } from "../../api";
+import { fetchPost } from "@/app/api";
 
 export async function generateMetadata({ params }: { params: any }) {
-    const post = await getPost(params?.slug);
+    const { data: post } = await fetchPost(params?.slug);
     const postTitle = Parser(`${post[0]?.title?.rendered}`);
     const postDescription = Parser(`${post[0]?.description?.rendered}`);
     const postImage = post[0]?.featured_images?.medium_large;
@@ -26,13 +26,15 @@ export async function generateMetadata({ params }: { params: any }) {
     };
 }
 
+
 async function BlogHead({ params }: {
         params: { slug: string }
     }) {
 
-    const posts = await getPost(params.slug);
-    const postDate = format(new Date(posts[0]?.date_gmt), 'EEEE, MMMM do, yyyy');
-    if (posts[0]?.sticky) {
+
+    const { data: post } = await fetchPost(params.slug);
+    const postDate = format( new Date( post[0]?.date_gmt ), 'EEEE, MMMM do, yyyy' );
+    if ( post[0]?.sticky ) {
         return (
             <RoughNotation
                 animate={true}
@@ -57,25 +59,25 @@ async function BlogHead({ params }: {
                     </dl>
                     <div>
                         <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
-                            {Parser(`${posts[0]?.title?.rendered}`)}
+                            {Parser(`${post[0]?.title?.rendered}`)}
                         </h1>
                     </div>
                     <div className="flex justify-center gap-5 py-4">
-                        <span className="hidden md:flex items-center gap-1.5">
+                        <span className="flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="M14.4 15.8c-.6.7-1.1 1.2-1.6 1.5a3 3 0 0 1-2 .8 3 3 0 0 1-1-.2 3 3 0 0 1-1.5-1.5l-1-2.5-.2-.2c-.3-.7-.3-.9-.5-1a2 2 0 0 0-.3-.5l-1-.5c-.7-.4-1.3-.6-1.7-1-.4-.2-.8-.5-1.1-1a3 3 0 0 1-.4-2c.2-.6.4-1 .8-1.4l1.3-1.4.7-.7 1.4-1.3c.4-.4.8-.6 1.3-.8a3 3 0 0 1 2.1.4c.5.3.8.7 1 1.1.4.4.6 1 1 1.7l.5 1 .4.3 1 .5.3.1 2.5 1.1a3 3 0 0 1 1.5 1.5l.2 1c0 .8-.3 1.5-.8 2-.3.5-.8 1-1.5 1.6l5 4.9a1 1 0 0 1-1.5 1.4l-4.9-4.9Zm-10.2-7 .5.3 1.5.8 1.3.8.8.8L9 13v.3l1 2.2c.3.5.5.6.6.6l.3.1s.3 0 .7-.3l1.8-1.7.7-.7 1.7-1.8c.3-.4.3-.6.3-.7v-.3c0-.1-.2-.3-.7-.5l-2.2-1-.3-.1-1.4-.7a4 4 0 0 1-.8-.8l-.8-1.3a21.7 21.7 0 0 0-1.2-2 1 1 0 0 0-.7-.1s-.2 0-.5.3L6.3 5.6l-.7.7-1.2 1.2-.3.5.1.7Z"/></svg>
                             Pinned
                         </span>
                         <span className="flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="m15.7 3.4.8-.7a3 3 0 0 1 3.3 0l.8.7.7.8a3 3 0 0 1 0 3.4l-.7.8L9.8 19.2a5 5 0 0 1-.7.6l-.8.5-1 .4c-1.3.5-2.2 1-2.8 1-.8.2-1.3 0-1.7-.4-.4-.4-.6-1-.5-1.8.1-.6.5-1.5 1-2.8l.5-1 .4-.7.6-.7L15.7 3.4Zm-2 4.9-7.5 7.4-.3.4-.3.5-.4 1-.9 2v.1c.6-.1 1.3-.5 2.2-.9l1-.4.5-.2.4-.4 7.4-7.4-2.2-2.1Zm3.5.7 2-2 .5-.5a1 1 0 0 0 0-1.2l-.5-.5-.5-.4a1 1 0 0 0-1.1 0c-.2 0-.3.2-.5.4l-2 2L17 9Z"/></svg>
-                            {posts[0]?.read_time?.words.toLocaleString()} words
+                            {post[0]?.read_time?.words.toLocaleString()} words
                         </span>
                         <span className="flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="M11 6a5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5Zm-1 0a4 4 0 0 0-4-4 4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4ZM5.5 4a.5.5 0 0 1 1 0v1.8L7.9 7A.5.5 0 0 1 7 8L5.6 6.4 5.5 6V4Z"/></svg>
-                            {posts[0]?.read_time?.time?.minutes.toLocaleString()} min read
+                            {post[0]?.read_time?.time?.minutes.toLocaleString()} min read
                         </span>
                         <span className="flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="M.8 5.8a5.5 5.5 0 0 1 10.4 0v.4a5.5 5.5 0 0 1-10.4 0v-.4Zm1 .2a4.5 4.5 0 0 0 8.4 0 4.5 4.5 0 0 0-8.4 0ZM8 6a2 2 0 0 1-2 2 2 2 0 0 1-2-2c0-1.1.9-2 2-2a2 2 0 0 1 2 2ZM7 6c0-.5-.5-1-1-1a1 1 0 0 0-1 1c0 .5.5 1 1 1s1-.5 1-1Z"/></svg>
-                            <Views id={posts[0]?.id} />
+                            <Views id={post[0]?.id} />
                         </span>
                     </div>
                 </div>
@@ -97,21 +99,21 @@ async function BlogHead({ params }: {
                 </dl>
                 <div>
                     <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
-                        {Parser(`${posts[0]?.title?.rendered}`)}
+                        {Parser(`${post[0]?.title?.rendered}`)}
                     </h1>
                 </div>
                 <div className="flex justify-center gap-5 py-4">
                     <span className="flex items-center gap-1.5">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="m15.7 3.4.8-.7a3 3 0 0 1 3.3 0l.8.7.7.8a3 3 0 0 1 0 3.4l-.7.8L9.8 19.2a5 5 0 0 1-.7.6l-.8.5-1 .4c-1.3.5-2.2 1-2.8 1-.8.2-1.3 0-1.7-.4-.4-.4-.6-1-.5-1.8.1-.6.5-1.5 1-2.8l.5-1 .4-.7.6-.7L15.7 3.4Zm-2 4.9-7.5 7.4-.3.4-.3.5-.4 1-.9 2v.1c.6-.1 1.3-.5 2.2-.9l1-.4.5-.2.4-.4 7.4-7.4-2.2-2.1Zm3.5.7 2-2 .5-.5a1 1 0 0 0 0-1.2l-.5-.5-.5-.4a1 1 0 0 0-1.1 0c-.2 0-.3.2-.5.4l-2 2L17 9Z"/></svg>
-                        {posts[0]?.read_time?.words.toLocaleString()} words
+                        {post[0]?.read_time?.words.toLocaleString()} words
                     </span>
                     <span className="flex items-center gap-1.5">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="M11 6a5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5Zm-1 0a4 4 0 0 0-4-4 4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4ZM5.5 4a.5.5 0 0 1 1 0v1.8L7.9 7A.5.5 0 0 1 7 8L5.6 6.4 5.5 6V4Z"/></svg>
-                        {posts[0]?.read_time?.time?.minutes.toLocaleString()} min read
+                        {post[0]?.read_time?.time?.minutes.toLocaleString()} min read
                     </span>
                     <span className="flex items-center gap-1.5">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="h-5 w-5 fill-current" height="1em" width="1em"><path d="M.8 5.8a5.5 5.5 0 0 1 10.4 0v.4a5.5 5.5 0 0 1-10.4 0v-.4Zm1 .2a4.5 4.5 0 0 0 8.4 0 4.5 4.5 0 0 0-8.4 0ZM8 6a2 2 0 0 1-2 2 2 2 0 0 1-2-2c0-1.1.9-2 2-2a2 2 0 0 1 2 2ZM7 6c0-.5-.5-1-1-1a1 1 0 0 0-1 1c0 .5.5 1 1 1s1-.5 1-1Z"/></svg>
-                        <Views id={posts[0]?.id} />
+                        <Views id={post[0]?.id} />
                     </span>
                 </div>
             </div>
@@ -122,11 +124,11 @@ async function BlogHead({ params }: {
 async function BlogPost({ params }: {
         params: { slug: string }
     }) {
-    const data = await getPost(params.slug);
+    const { data: post } = await fetchPost(params.slug);
 
     return (
         <>
-           {data.map((post: any) => {
+           {post.map((post: any) => {
                 const author = post?._embedded?.author[0];
                 const mastodonUsername = author?.acf?.mastodon.split('@').pop();
 

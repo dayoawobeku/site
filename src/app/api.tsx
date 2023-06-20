@@ -1,34 +1,80 @@
 import { Site, menuID } from "../../lib/info";
-import { fetcher } from "./apiClient";
 
-export function fetchLogoData() {
-  return fetcher(`${Site}/wp-json/`);
+interface QueryParams {
+  [key: string]: string | number | boolean;
 }
 
-export function fetchImageData(imageId: number) {
-  return fetcher(`${Site}/wp-json/wp/v2/media/${imageId}`);
+function buildQueryString(params: QueryParams): string {
+  const query = Object.keys(params)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    .join("&");
+  return query ? `?${query}` : "";
 }
 
-export function fetchMenuData() {
-  return fetcher(`${Site}/wp-json/options/menu/${menuID}`);
+async function fetchData(url: string, params?: QueryParams) {
+  const query = params ? buildQueryString(params) : "";
+  const response = await fetch(`${url}${query}`);
+  const data = await response.json();
+  const totalPages = Number(response.headers.get("X-WP-TotalPages"));
+
+  return { data, totalPages };
 }
 
-export function fetchPostsHome() {
-  return fetcher(`${Site}/wp-json/wp/v2/posts?per_page=3`);
+export async function fetchLogo() {
+  const url = `${Site}/wp-json/`;
+  return fetchData(url);
 }
 
-export function fetchPostsPaginated(page: number) {
-  return fetcher(`${Site}/wp-json/wp/v2/posts?per_page=10&page=${page}`);
+export async function fetchImage(imageId: number) {
+  const params: QueryParams = {};
+
+  const url = `${Site}/wp-json/wp/v2/media/${imageId}`;
+  return fetchData(url, params);
 }
 
-export function getPosts() {
-  return fetcher(`${Site}/wp-json/wp/v2/posts?per_page=10`);
+export async function fetchMenu() {
+  const url = `${Site}/wp-json/options/menu/${menuID}`;
+  return fetchData(url);
 }
 
-export function getPost(slug: string) {
-  return fetcher(`${Site}/wp-json/wp/v2/posts?slug=${slug}&per_page=1&_embed`);
+export async function fetchPosts(limit: number, page: number, tag?: string) {
+  const params: QueryParams = {
+    per_page: limit.toString(),
+    page: page.toString(),
+    ...(tag && { "filter[tag]": tag }),
+  };
+
+  const url = `${Site}/wp-json/wp/v2/posts`;
+  return fetchData(url, params);
 }
 
-export function getPage(slug: string) {
-  return fetcher(`${Site}/wp-json/wp/v2/pages?slug=${slug}&per_page=1&_embed`);
+export async function fetchPost(slug: string) {
+  const params: QueryParams = {
+    slug,
+    per_page: "1",
+    _embed: true,
+  };
+
+  const url = `${Site}/wp-json/wp/v2/posts`;
+  return fetchData(url, params);
+}
+
+export async function fetchPage(slug: string) {
+  const params: QueryParams = {
+    slug,
+    per_page: "1",
+    _embed: true,
+  };
+
+  const url = `${Site}/wp-json/wp/v2/pages`;
+  return fetchData(url, params);
+}
+
+export async function fetchTags(searchTerm: string) {
+  const params: QueryParams = {
+    search: searchTerm,
+  };
+
+  const url = `${Site}/wp-json/wp/v2/tags`;
+  return fetchData(url, params);
 }

@@ -1,41 +1,12 @@
-"use client"
-
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import { fetchImageData } from "../api";
+import { fetchImage } from "../api";
 
-interface ImageData {
-  source_url: string;
-}
-
-interface WpImageProps {
-  id: number;
-  width: number;
-  height: number;
-  alt: string;
-  className?: string;
-}
-
-const WpImage: React.FC<WpImageProps> = ({ id, width, height, alt, className }) => {
-  const [imageData, setImageData] = useState<ImageData | null>(null);
-
-  useEffect(() => {
-    fetchImageData(id)
-      .then((data: ImageData) => {
-        setImageData(data);
-      })
-      .catch((error: Error) => {
-        console.error("Error fetching image data:", error);
-      });
-  }, [id]);
-
-  if (!imageData) {
-    return null;
-  }
+const WpImage = async ({ id, width, height, alt, className }: { id: number, width: number, height: number, alt: string, className: string }) => {
+  const imageData = await fetchImage(id);
 
   return (
     <Image
-      src={imageData.source_url}
+      src={imageData.data.source_url}
       width={width}
       height={height}
       alt={alt}

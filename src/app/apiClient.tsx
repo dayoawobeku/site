@@ -5,5 +5,5 @@ export const fetcher = async (url: string) => {
     throw new Error("Failed to fetch data");
   }
   
-  return res.json();
+  return res.json;
 };

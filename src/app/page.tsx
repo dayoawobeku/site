@@ -1,15 +1,9 @@
 import Hero from './components/hero';
 import Post from './components/post';
-import { fetchPostsHome } from './api';
+import { fetchPosts } from './api';
 
 async function Home() {
-  const data = await fetchPostsHome();
-
-  const posts = data.map((post: any) => {
-    return (
-      <Post id={post.id} key={post.id} />
-    );
-  });
+  const data = await fetchPosts(3, 1);
 
   return (
     <>
@@ -19,7 +13,13 @@ async function Home() {
       </h2>
       <hr className='relative border-gray-200 dark:border-gray-700 z-20' />
       <div className='relative z-50'>
-        {posts}
+        {
+          data.data.map((post: any) => {
+            return (
+              <Post id={post.id} key={post.id} />
+            );
+          })
+        }
       </div>
     </>
   );
