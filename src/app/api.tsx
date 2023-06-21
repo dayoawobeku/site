@@ -6,7 +6,9 @@ interface QueryParams {
 
 function buildQueryString(params: QueryParams): string {
   const query = Object.keys(params)
-    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    .map(
+      (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+    )
     .join("&");
   return query ? `?${query}` : "";
 }
@@ -37,16 +39,12 @@ export async function fetchMenu() {
   return fetchData(url);
 }
 
-export async function fetchPosts(limit: number, page: number, tag?: string) {
-  const params: QueryParams = {
-    per_page: limit.toString(),
-    page: page.toString(),
-    ...(tag && { "filter[tag]": tag }),
-  };
-
-  const url = `${Site}/wp-json/wp/v2/posts`;
-  return fetchData(url, params);
-}
+export const fetchPosts = async () => {
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const data = await response.json();
+  const limitedData = data.slice(0, 10);
+  return limitedData;
+};
 
 export async function fetchPost(slug: string) {
   const params: QueryParams = {
