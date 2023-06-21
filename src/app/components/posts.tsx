@@ -7,7 +7,7 @@ import Post from "./post";
 function Posts() {
   const { data: posts, status } = useQuery(["posts"], () => fetchPosts());
 
-  console.log(posts);
+  console.log(posts, "posts");
 
   return (
     <>
